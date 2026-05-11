@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Liste des Voitures</h2>
+    <button class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Nouvelle Voiture</button>
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger mt-4 fs-5 fw-bold text-center">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{errorMessage}}
+  </div>
+
+  <div *ngIf="!errorMessage && voitures.length > 0" class="alert alert-success mb-3">
+    <strong>{{voitures.length}} véhicules trouvés dans la base de données !</strong>
+    <details>
+      <summary>Voir les données brutes (JSON)</summary>
+      <pre style="max-height: 200px; overflow: auto;">{{ voitures | json }}</pre>
+    </details>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!errorMessage">
+    <div class="col" *ngFor="let v of voitures">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-bold text-primary">{{v.marque}} {{v.modele}}</h5>
+          <h6 class="card-subtitle mb-3 text-muted">Matricule: {{v.matricule}}</h6>
+          <hr>
+          <ul class="list-unstyled mb-3">
+            <li><i class="bi bi-fuel-pump me-2"></i> Carburant: <strong>{{v.typeCarburant}}</strong></li>
+            <li><i class="bi bi-gear me-2"></i> Boîte: <strong>{{v.boiteVitesse}}</strong></li>
+            <li><i class="bi bi-door-open me-2"></i> Portes: <strong>{{v.nombrePortes}}</strong></li>
+            <li><i class="bi bi-calendar-check me-2"></i> Mise en service: <strong>{{v.dateMiseEnService | date:'dd/MM/yyyy'}}</strong></li>
+            <li><i class="bi bi-building me-2"></i> Agence: <strong>{{v.agenceDTO?.nom}} ({{v.agenceDTO?.ville}})</strong></li>
+          </ul>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="badge" [ngClass]="{'bg-success': v.statut === 'Disponible', 'bg-warning': v.statut === 'Loué', 'bg-danger text-white': v.statut === 'EnMaintenance'}">{{v.statut}}</span>
+            <span class="fs-5 fw-bold text-success">{{v.prixParJour}} MAD / j</span>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 pb-3">
+          <button class="btn btn-outline-primary w-100" [disabled]="v.statut !== 'Disponible'">Réserver maintenant</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="voitures.length === 0 && !errorMessage" class="alert alert-info mt-4">
+    Aucune voiture n'est disponible pour le moment.
+  </div>
+</div>

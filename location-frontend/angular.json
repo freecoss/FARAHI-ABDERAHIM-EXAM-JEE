@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "location-frontend": {
+    "location-front": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -26,7 +26,11 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -57,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "location-frontend:build:production"
+              "buildTarget": "location-front:build:production"
             },
             "development": {
-              "buildTarget": "location-frontend:build:development"
+              "buildTarget": "location-front:build:development"
             }
           },
           "defaultConfiguration": "development"
