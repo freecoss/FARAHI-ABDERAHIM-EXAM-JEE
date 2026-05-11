@@ -32,7 +32,7 @@ public class LocationBackendApplication {
                             VehiculeRepository vehiculeRepository,
                             LocationRepository locationRepository) {
         return args -> {
-            Stream.of("Agence Casa", "Agence Rabat", "Agence Tanger").forEach(nom -> {
+            Stream.of("Agence Mohammedia", "Agence chichaoua", "Agence Tanger").forEach(nom -> {
                 Agence agence = new Agence();
                 agence.setNom(nom);
                 agence.setAdresse("Adresse de " + nom);
