@@ -1,56 +1,30 @@
 package org.exam.locationbackend.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.exam.locationbackend.enums.VehiculeStatut;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "vehicules")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "type_vehicule", discriminatorType = DiscriminatorType.STRING)
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", length = 8)
+@Data @NoArgsConstructor @AllArgsConstructor
 public abstract class Vehicule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 100)
     private String marque;
-
-    @Column(nullable = false, length = 100)
     private String modele;
-
-    @Column(nullable = false, unique = true, length = 20)
     private String matricule;
-
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal prixParJour;
-
-    @Column(nullable = false)
-    private LocalDate dateMiseEnService;
-
+    private double prixParJour;
+    private Date dateMiseEnService;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private VehiculeStatut statut;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "agence_id", nullable = false)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @ManyToOne
     private Agence agence;
-
-    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Location> locations = new ArrayList<>();
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    private List<Location> locations;
 }

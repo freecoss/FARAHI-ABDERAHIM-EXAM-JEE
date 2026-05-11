@@ -1,30 +1,23 @@
 package org.exam.locationbackend.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.exam.locationbackend.enums.BoiteVitesse;
 import org.exam.locationbackend.enums.TypeCarburant;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 @Entity
-@Table(name = "voitures")
-@DiscriminatorValue("VOITURE")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@DiscriminatorValue("VOIT")
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Voiture extends Vehicule {
-
-    @Column(nullable = false)
-    private Integer nombrePortes;
-
+    private int nombrePortes;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
     private TypeCarburant typeCarburant;
-
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
     private BoiteVitesse boiteVitesse;
 }

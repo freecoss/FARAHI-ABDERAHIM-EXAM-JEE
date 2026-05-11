@@ -1,29 +1,21 @@
 package org.exam.locationbackend.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.exam.locationbackend.enums.TypeMoto;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
-@Table(name = "motos")
 @DiscriminatorValue("MOTO")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Moto extends Vehicule {
-
-    @Column(nullable = false)
-    private Integer cylindree;
-
+    private int cylindree;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
     private TypeMoto typeMoto;
-
-    @Column(nullable = false)
-    private Boolean casqueInclus;
+    private boolean casqueInclus;
 }
